@@ -37,7 +37,7 @@ module.exports = function (game, opts) {
     function occupied (y) {
         var pos = position();
         pos.y = y;
-        return y <= ymax && y >= ymin && voxels.voxelAtPosition(pos);
+        return y <= ymax && y >= ymin && voxels.voxelAtPosition([pos.x,pos.y,pos.z]);
     }
     
     var updated = {};
@@ -70,10 +70,10 @@ module.exports = function (game, opts) {
     });
     
     function set (pos, value) {
-        var ex = voxels.voxelAtPosition(pos);
+        var ex = voxels.voxelAtPosition([pos.x,pos.y,pos.z]);
         if (ex) true;
-        voxels.voxelAtPosition(pos, value);
-        var c = voxels.chunkAtPosition(pos);
+        voxels.voxelAtPosition([pos.x,pos.y,pos.z], value);
+        var c = voxels.chunkAtPosition([pos.x,pos.y,pos.z]);
         var key = c.join('|');
         if (!updated[key] && voxels.chunks[key]) {
             updated[key] = voxels.chunks[key];
